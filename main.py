@@ -20,17 +20,31 @@ class Lot:
 						"Цена" : float(self.money.replace(" ","")),
 						"VIN номер" : self.vin,
 						"Ссылка" : self.link,
-						"Описание" : self.properties,
+						#"Описание" : self.properties,
+						"Описание" : "Временно отключено",
 						"Регион" : self.region
 						}
 
 	def show(self):
-		print(self.libra)	
+		print("{")
+		print("	"+"Номер на торгах : " +self.libra.get("Номер на торгах"))
+		print("	"+"Лот : " +self.libra.get("Лот"))
+		print("	"+"Цена : " +str(self.libra.get("Цена")))
+		print("	"+"VIN номер : " +self.libra.get("VIN номер"))
+		print("	"+"Ссылка : " +self.libra.get("Ссылка"))
+		print("	"+"Описание : " +self.libra.get("Описание"))
+		print("	"+"Регион : " + self.libra.get("Регион"))
+		print("}")	
 		return 0	
+
+def beautiful_drow(array):
+	for elem in array:
+		elem.show()
+
 
 def parse(url):
 
-	browser = webdriver.Edge()
+	browser = webdriver.Chrome()
 	browser.get(url)
 
 	bs = BeautifulSoup(browser.page_source, 'html.parser')
@@ -83,11 +97,8 @@ def parse(url):
 		obj = Lot(torg_number, lot, money, link, propt, vin, region_str)
 		obj.show()
 		arrayoflots.append(obj)
-		for lot in arrayoflots:
-			lot.show()
-
-
 	
+	beautiful_drow(arrayoflots)
 
 	return 0
 
